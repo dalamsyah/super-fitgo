@@ -10,6 +10,8 @@
     <string name="icon_fa_icon_location_dot">&#xf3c5;</string>
     <string name="icon_fa_icon_share_nodes">&#xf1e0;</string>
     <string name="icon_fa_icon_star">&#xf005;</string>
+    <string name="icon_fa_icon_phone">&#xf095;</string>
+    <string name="icon_fa_icon_route">&#xf4d7;</string>
 
 
     <string name="app_name">Super Fitgo</string>

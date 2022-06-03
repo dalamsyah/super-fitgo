@@ -141,6 +141,7 @@ fun LapanganDetailViewBody(navController: NavHostController, viewModel: Lapangan
                                     fontFamily = FA,
                                     color = Color.Black
                                 )
+                                Spacer(modifier = Modifier.width(5.dp))
                                 Text(text = "Jakarta Utara")
                             }
 

@@ -129,7 +129,7 @@ fun IndexViewBody(navController: NavHostController, viewModel: LoginViewModel = 
             
             LazyColumn(modifier = Modifier){
                 itemsIndexed(items){ index, item ->
-                    CardLapangan("$item", index == (items.size - 1))
+                    CardLapangan("$item", index == (items.size - 1), navController)
                 }
             }
 
@@ -269,12 +269,14 @@ fun CardLapangan(name: String, navController: NavHostController) {
 }
 
 @Composable
-fun CardLapangan(name: String, last: Boolean) {
+fun CardLapangan(name: String, last: Boolean, navController: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(paddingLeftRight)
-            .clickable { }
+            .clickable {
+                navController.navigate(FitgoScreen.LapanganDetailView.name)
+            }
             .shadow(10.dp, RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp)),
         elevation = 10.dp,
         shape = MaterialTheme.shapes.large

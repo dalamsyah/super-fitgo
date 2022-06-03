@@ -47,7 +47,7 @@ fun LoginViewBody(navController: NavHostController, viewModel: LoginViewModel = 
         Spacer(modifier = Modifier.height(10.dp))
 
         ButtonPrimary(text = stringResource(id = R.string.login), modifier = Modifier.fillMaxWidth(), onClick = {
-            navController.navigate(FitgoScreen.LoginView.name)
+            navController.navigate(FitgoScreen.IndexView.name)
         })
 
         Spacer(modifier = Modifier.height(10.dp))

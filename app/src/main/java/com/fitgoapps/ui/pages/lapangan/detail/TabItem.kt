@@ -4,16 +4,18 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,6 +34,9 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.*
 import kotlinx.coroutines.launch
 
 typealias ComposableFun = @Composable () -> Unit
@@ -147,15 +152,94 @@ fun ReviewScreen(){
 
 @Composable
 fun ContactScreen(){
-    Column() {
-        Text(text = "ContactScreen")
+
+    val state = rememberScrollState()
+
+    Column(modifier = Modifier
+        .verticalScroll(state)
+        .padding(paddingLeftRight)
+        .fillMaxSize()) {
+        Row(verticalAlignment = Alignment.CenterVertically){
+            Text(
+                text = stringResource(id = R.string.icon_fa_icon_location_dot),
+                fontFamily = FA,
+                color = Color.Black
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Text(text = "Jl. Raya Walang No. 13 RT. 04 RW. 06 Cilincing, Jakarta Utara 14130")
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically){
+            Text(
+                text = stringResource(id = R.string.icon_fa_icon_phone),
+                fontFamily = FA,
+                color = Color.Black
+            )
+            Spacer(modifier = Modifier.width(5.dp))
+            Text(text = "089635781185 (Fauzi)")
+        }
+        
+        Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
+            OutlinedButton(onClick = { /*TODO*/ }, modifier = Modifier
+                .weight(1f)
+                .padding(10.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(10.dp)) {
+                    Text(
+                        text = stringResource(id = R.string.icon_fa_icon_route),
+                        fontFamily = FA,
+                        color = Green
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Text(text = "Direction")
+                }
+            }
+            OutlinedButton(onClick = { /*TODO*/ }, modifier = Modifier
+                .weight(1f)
+                .padding(10.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(10.dp)) {
+                    Text(
+                        text = stringResource(id = R.string.icon_fa_icon_phone),
+                        fontFamily = FA,
+                        color = Green
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Text(text = "Call Outlet")
+                }
+            }
+        }
+
+
+        /**
+         * Maps
+         */
+        Image(
+            painter = painterResource(id = R.drawable.maps),
+            contentDescription = "maps",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(400.dp))
+
     }
 }
 
 @Composable
 fun MoreInfoScreen(){
-    Column() {
-        Text(text = "MoreInfoScreen")
+
+    val state = rememberScrollState()
+
+    Column(modifier = Modifier.fillMaxSize().verticalScroll(state).padding(paddingLeftRight)) {
+        Text(text = "Jadwal", fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(text = "Senin: 10.00 - 22.00\n" +
+                "Selasa: 10.00 - 22.00\n" +
+                "Rabu: 10.00 - 22.00\n" +
+                "Kamis: 10.00 - 22.00\n" +
+                "Jum’at: Close\n" +
+                "Sabtu: 08.00 - 24.00\n" +
+                "Minggu: 08.00 - 24.00\n" +
+                "\n" +
+                "Note: Jadwal dapat berubah sesuai operasional.")
     }
 }
 
