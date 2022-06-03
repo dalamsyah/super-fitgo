@@ -1,0 +1,35 @@
+<resources>
+    <string name="icon_fa_icon_areachart">&#xf2b9;</string>
+    <string name="icon_fa_icon_bell">&#xf0f3;</string>
+    <string name="icon_fa_icon_home">&#xf015;</string>
+    <string name="icon_fa_icon_heart">&#xf004;</string>
+    <string name="icon_fa_icon_book">&#xf02d;</string>
+    <string name="icon_fa_icon_futbol">&#xf1e3;</string>
+    <string name="icon_fa_icon_magnifying_glass">&#xf002;</string>
+    <string name="icon_fa_icon_arrow_left">&#xf060;</string>
+    <string name="icon_fa_icon_location_dot">&#xf3c5;</string>
+    <string name="icon_fa_icon_share_nodes">&#xf1e0;</string>
+    <string name="icon_fa_icon_star">&#xf005;</string>
+
+
+    <string name="app_name">Super Fitgo</string>
+    <string name="title_activity_login_view">LoginView</string>
+    <string name="dont_have_account">DONT HAVE ACCOUNT?</string>
+    <string name="register_here">REGISTER HERE</string>
+    <string name="konfirmasi_password">Konfirmasi Password</string>
+    <string name="password">Password</string>
+    <string name="no_hp">No HP</string>
+    <string name="nama_tim">Nama Tim</string>
+    <string name="email">Email</string>
+    <string name="nama">Nama</string>
+    <string name="register">Register</string>
+    <string name="login">Log In</string>
+    <string name="home">Home</string>
+    <string name="sport">Sports</string>
+    <string name="booking">Bookings</string>
+    <string name="favorites">Favorites</string>
+    <string name="cari_lapangan">Cari lapangan</string>
+    <string name="booknow">Book Now</string>
+    <string name="nearbymerchant">Nearby Merchant</string>
+    <string name="toppick">Top Pick</string>
+</resources>
