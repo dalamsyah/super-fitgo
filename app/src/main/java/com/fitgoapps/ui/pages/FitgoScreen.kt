@@ -6,6 +6,10 @@ enum class FitgoScreen {
 
     LoginView,
     RegisterView,
+
+    BookingDetailView,
+    CalendarDetailView,
+    JamDetailView,
     ;
 
     companion object {
@@ -13,6 +17,9 @@ enum class FitgoScreen {
             when (route?.substringBefore("/")) {
                 IndexView.name -> IndexView
                 LapanganDetailView.name -> LapanganDetailView
+                BookingDetailView.name -> BookingDetailView
+                CalendarDetailView.name -> CalendarDetailView
+                JamDetailView.name -> JamDetailView
                 LoginView.name -> LoginView
                 RegisterView.name -> RegisterView
                 null -> IndexView

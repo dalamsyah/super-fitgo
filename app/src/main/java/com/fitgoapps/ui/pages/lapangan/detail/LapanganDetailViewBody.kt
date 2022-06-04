@@ -86,7 +86,9 @@ fun LapanganDetailViewBody(navController: NavHostController, viewModel: Lapangan
 
         Column(modifier = Modifier
             .padding(AppBarDefaults.ContentPadding)
-            .height(appBarDefaultHeight)) {
+            .height(appBarDefaultHeightCustom)) {
+            
+            Spacer(modifier = Modifier.height(appBarCustomPadding))
 
             IconButton(onClick = { navController.popBackStack() }) {
                 Text(
@@ -195,7 +197,7 @@ fun LapanganDetailViewBody(navController: NavHostController, viewModel: Lapangan
                         /**
                          * TAB
                          */
-                        TabScreen()
+                        TabScreen(navController = navController)
 
                     }
                 }

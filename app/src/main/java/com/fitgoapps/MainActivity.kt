@@ -1,12 +1,11 @@
 package com.fitgoapps
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -16,12 +15,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.fitgoapps.ui.pages.FitgoScreen
+import com.fitgoapps.ui.pages.booking.calendar.CalendarViewBody
+import com.fitgoapps.ui.pages.booking.detail.BookingDetailViewBody
+import com.fitgoapps.ui.pages.booking.jam.JamViewBody
 import com.fitgoapps.ui.pages.index.IndexViewBody
 import com.fitgoapps.ui.pages.lapangan.detail.LapanganDetailViewBody
 import com.fitgoapps.ui.pages.login.LoginViewBody
@@ -29,8 +32,12 @@ import com.fitgoapps.ui.pages.register.RegisterViewBody
 import com.fitgoapps.ui.theme.SuperFitgoTheme
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
             SuperFitgoTheme {
                 // A surface container using the 'background' color from the theme
@@ -48,7 +55,9 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold { innerPadding ->
                     Column() {
-                        FitgoNavHost(navController = navController, modifier = Modifier.padding(innerPadding).weight(1f))
+                        FitgoNavHost(navController = navController, modifier = Modifier
+                            .padding(innerPadding)
+                            .weight(1f))
                     }
                 }
 
@@ -57,6 +66,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun FitgoNavHost(
     navController: NavHostController,
@@ -64,7 +74,7 @@ fun FitgoNavHost(
 ){
     NavHost(
         navController = navController,
-        startDestination = FitgoScreen.LoginView.name,
+        startDestination = FitgoScreen.CalendarDetailView.name,
         modifier = modifier
     ){
 
@@ -79,6 +89,15 @@ fun FitgoNavHost(
         }
         composable(route = FitgoScreen.RegisterView.name) {
             RegisterViewBody(navController = navController)
+        }
+        composable(route = FitgoScreen.BookingDetailView.name) {
+            BookingDetailViewBody(navController = navController)
+        }
+        composable(route = FitgoScreen.JamDetailView.name) {
+            JamViewBody(navController = navController)
+        }
+        composable(route = FitgoScreen.CalendarDetailView.name) {
+            CalendarViewBody(navController = navController)
         }
 
     }
@@ -96,7 +115,9 @@ fun DefaultPreview() {
 
     Scaffold { innerPadding ->
         Column() {
-            FitgoNavHost(navController = navController, modifier = Modifier.padding(innerPadding).weight(1f))
+            FitgoNavHost(navController = navController, modifier = Modifier
+                .padding(innerPadding)
+                .weight(1f))
         }
     }
 

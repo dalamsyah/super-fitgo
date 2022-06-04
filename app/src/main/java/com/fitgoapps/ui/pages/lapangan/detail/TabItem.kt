@@ -26,7 +26,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.fitgoapps.R
+import com.fitgoapps.ui.pages.FitgoScreen
 import com.fitgoapps.ui.theme.*
 import com.fitgoapps.ui.util.FA
 import com.fitgoapps.ui.util.FA_Regular
@@ -42,14 +46,14 @@ import kotlinx.coroutines.launch
 typealias ComposableFun = @Composable () -> Unit
 
 sealed class TabItem(var icon: Int = 0, var title: String, var screen: ComposableFun) {
-    object Court : TabItem(0, "Court", { CourtScreen() })
-    object Review : TabItem(0, "Review", { ReviewScreen() })
-    object Contact : TabItem(0, "Contact", { ContactScreen() })
-    object MoreInfo : TabItem(0, "More Info", { MoreInfoScreen() })
+    object Court : TabItem(0, "Court", {  })
+    object Review : TabItem(0, "Review", {  })
+    object Contact : TabItem(0, "Contact", {  })
+    object MoreInfo : TabItem(0, "More Info", {  })
 }
 
 @Composable
-fun CourtScreen(){
+fun CourtScreen(navController: NavHostController = rememberNavController()){
     LazyColumn(modifier = Modifier
         .fillMaxWidth()) {
 
@@ -75,7 +79,7 @@ fun CourtScreen(){
                     shape = RoundedCornerShape(roundedCorner),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Green),
                     onClick = {
-
+                        navController.navigate(FitgoScreen.CalendarDetailView.name)
                     }
                 ) {
                     Text(text = stringResource(id = R.string.booknow), color = Color.White, fontWeight = FontWeight.Bold )
@@ -91,7 +95,7 @@ fun CourtScreen(){
 }
 
 @Composable
-fun ReviewScreen(){
+fun ReviewScreen(navController: NavHostController){
     LazyColumn(modifier = Modifier
         .fillMaxWidth()) {
 
@@ -151,7 +155,7 @@ fun ReviewScreen(){
 }
 
 @Composable
-fun ContactScreen(){
+fun ContactScreen(navController: NavHostController){
 
     val state = rememberScrollState()
 
@@ -224,11 +228,14 @@ fun ContactScreen(){
 }
 
 @Composable
-fun MoreInfoScreen(){
+fun MoreInfoScreen(navController: NavHostController){
 
     val state = rememberScrollState()
 
-    Column(modifier = Modifier.fillMaxSize().verticalScroll(state).padding(paddingLeftRight)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(state)
+        .padding(paddingLeftRight)) {
         Text(text = "Jadwal", fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(10.dp))
         Text(text = "Senin: 10.00 - 22.00\n" +
@@ -283,9 +290,23 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
+fun TabsContent(tabs: List<TabItem>, pagerState: PagerState, navController: NavHostController) {
     HorizontalPager(state = pagerState, count = tabs.size) { page ->
-        tabs[page].screen()
+
+        when(tabs[page].title){
+            TabItem.Court.title -> {
+                CourtScreen(navController = navController)
+            }
+            TabItem.Review.title -> {
+                ReviewScreen(navController = navController)
+            }
+            TabItem.Contact.title -> {
+                ContactScreen(navController = navController)
+            }
+            TabItem.MoreInfo.title -> {
+                MoreInfoScreen(navController = navController)
+            }
+        }
     }
 }
 
@@ -293,13 +314,13 @@ fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
 @Composable
-fun TabScreen(){
+fun TabScreen(navController: NavHostController){
     val tabs = listOf(TabItem.Court, TabItem.Review, TabItem.Contact, TabItem.MoreInfo)
     val pagerState = rememberPagerState()
 
     Column {
         Tabs(tabs = tabs, pagerState = pagerState)
-        TabsContent(tabs = tabs, pagerState = pagerState)
+        TabsContent(tabs = tabs, pagerState = pagerState, navController = navController)
     }
 
 }
