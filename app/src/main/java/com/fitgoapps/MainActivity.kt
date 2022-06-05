@@ -22,13 +22,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.fitgoapps.ui.pages.FitgoScreen
+import com.fitgoapps.ui.pages.account.AccountViewBody
 import com.fitgoapps.ui.pages.booking.calendar.CalendarViewBody
 import com.fitgoapps.ui.pages.booking.detail.BookingDetailViewBody
 import com.fitgoapps.ui.pages.booking.jam.JamViewBody
+import com.fitgoapps.ui.pages.favorites.FavortiesViewBody
 import com.fitgoapps.ui.pages.index.IndexViewBody
 import com.fitgoapps.ui.pages.lapangan.detail.LapanganDetailViewBody
+import com.fitgoapps.ui.pages.lapangan.search.SearchViewBody
 import com.fitgoapps.ui.pages.login.LoginViewBody
+import com.fitgoapps.ui.pages.notification.NotificationViewBody
 import com.fitgoapps.ui.pages.register.RegisterViewBody
+import com.fitgoapps.ui.pages.sport.SportViewBody
 import com.fitgoapps.ui.theme.SuperFitgoTheme
 
 class MainActivity : ComponentActivity() {
@@ -74,7 +79,7 @@ fun FitgoNavHost(
 ){
     NavHost(
         navController = navController,
-        startDestination = FitgoScreen.CalendarDetailView.name,
+        startDestination = FitgoScreen.IndexView.name,
         modifier = modifier
     ){
 
@@ -98,6 +103,21 @@ fun FitgoNavHost(
         }
         composable(route = FitgoScreen.CalendarDetailView.name) {
             CalendarViewBody(navController = navController)
+        }
+        composable(route = FitgoScreen.SearchView.name) {
+            SearchViewBody(navController = navController)
+        }
+        composable(route = FitgoScreen.NotificationView.name) {
+            NotificationViewBody(navController = navController)
+        }
+        composable(route = FitgoScreen.AccountView.name) {
+            AccountViewBody(navController = navController)
+        }
+        composable(route = FitgoScreen.FavoritesView.name) {
+            FavortiesViewBody(navController = navController)
+        }
+        composable(route = FitgoScreen.SportView.name) {
+            SportViewBody(navController = navController)
         }
 
     }

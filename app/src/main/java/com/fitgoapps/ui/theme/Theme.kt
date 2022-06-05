@@ -146,14 +146,3 @@ fun EditTextPrimary(
     )
 
 }
-
-@Composable
-fun TopAppBarCustom(
-    content: @Composable RowScope.() -> Unit
-){
-
-    TopAppBar(modifier = Modifier){
-        content
-    }
-
-}

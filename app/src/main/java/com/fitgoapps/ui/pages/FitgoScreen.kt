@@ -10,6 +10,11 @@ enum class FitgoScreen {
     BookingDetailView,
     CalendarDetailView,
     JamDetailView,
+    SearchView,
+    NotificationView,
+    AccountView,
+    FavoritesView,
+    SportView,
     ;
 
     companion object {
@@ -20,6 +25,11 @@ enum class FitgoScreen {
                 BookingDetailView.name -> BookingDetailView
                 CalendarDetailView.name -> CalendarDetailView
                 JamDetailView.name -> JamDetailView
+                SearchView.name -> SearchView
+                NotificationView.name -> NotificationView
+                AccountView.name -> AccountView
+                FavoritesView.name -> FavoritesView
+                SportView.name -> SportView
                 LoginView.name -> LoginView
                 RegisterView.name -> RegisterView
                 null -> IndexView

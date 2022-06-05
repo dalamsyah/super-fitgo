@@ -39,18 +39,20 @@ import com.fitgoapps.R
 import com.fitgoapps.ui.pages.FitgoScreen
 import com.fitgoapps.ui.pages.TemplateNavigation
 import com.fitgoapps.ui.pages.booking.detail.BookingDetailViewBody
+import com.fitgoapps.ui.pages.favorites.FavortiesViewBody
 import com.fitgoapps.ui.pages.home.HomeViewBody
 import com.fitgoapps.ui.pages.login.LoginViewModel
+import com.fitgoapps.ui.pages.sport.SportViewBody
 import com.fitgoapps.ui.theme.*
 import com.fitgoapps.ui.util.FA
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 
 sealed class BottomNavigationItem(var icon : Int, var title: Int, var layout: @Composable () -> Unit){
-    object Home : BottomNavigationItem( R.string.icon_fa_icon_home, R.string.home, { HomeViewBody() })
-    object Favorites : BottomNavigationItem( R.string.icon_fa_icon_heart, R.string.favorites, { HomeViewBody() })
-    object Booking : BottomNavigationItem( R.string.icon_fa_icon_book, R.string.booking, { BookingDetailViewBody() })
-    object Sport : BottomNavigationItem( R.string.icon_fa_icon_futbol, R.string.sport, { HomeViewBody() })
+    object Home : BottomNavigationItem( R.string.icon_fa_icon_home, R.string.home, {  })
+    object Favorites : BottomNavigationItem( R.string.icon_fa_icon_heart, R.string.favorites, { })
+    object Booking : BottomNavigationItem( R.string.icon_fa_icon_book, R.string.booking, {  })
+    object Sport : BottomNavigationItem( R.string.icon_fa_icon_futbol, R.string.sport, {  })
 }
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
@@ -67,68 +69,6 @@ fun IndexViewBody(navController: NavHostController, viewModel: LoginViewModel = 
 
         Column(modifier = Modifier) {
 
-            TopAppBar(modifier = Modifier.height(appBarDefaultHeightCustom)){
-
-                Row(modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = appBarCustomPadding)) {
-                    BasicTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 10.dp, start = 15.dp)
-                            .weight(1f),
-                        value = viewModel.email.value,
-                        onValueChange = {
-                            viewModel.email.value = it
-                        },
-                        decorationBox = { innerTextField ->
-                            Row(modifier = Modifier
-                                .background(color = White, shape = RoundedCornerShape(8.dp))
-                                .padding(5.dp), verticalAlignment = Alignment.CenterVertically) {
-
-                                Text(
-                                    modifier = Modifier.padding(start = 2.dp),
-                                    text = stringResource(id = R.string.icon_fa_icon_magnifying_glass),
-                                    fontFamily = FA,
-                                    color = Gray
-                                )
-
-                                Box(modifier = Modifier.padding(start = 2.dp),) {
-                                    Column() {
-                                        if (viewModel.email.value.isEmpty()) {
-                                            Text(
-                                                stringResource(id = R.string.cari_lapangan),
-                                                color = Color.Gray, fontSize = 11.sp,
-                                                modifier = Modifier.padding(start = 2.dp, top = 2.dp),
-                                            )
-                                        }
-                                    }
-                                    innerTextField()
-                                }
-
-                            }
-                        }
-                    )
-
-
-                    IconButton(onClick = {  }) {
-                        Text(
-                            text = stringResource(id = R.string.icon_fa_icon_bell),
-                            fontFamily = FA,
-                            color = Color.White
-                        )
-                    }
-
-                    IconButton(modifier = Modifier.padding(end = paddingLeftRight), onClick = {  }) {
-                        Icon(
-                            Icons.Filled.Person,
-                            "contentDescription",
-                            tint = Color.White)
-                    }
-                }
-
-            }
-
             /**
              * Content Body
              */
@@ -138,6 +78,12 @@ fun IndexViewBody(navController: NavHostController, viewModel: LoginViewModel = 
                 }
                 BottomNavigationItem.Booking.title -> {
                     BookingDetailViewBody(navController = navController)
+                }
+                BottomNavigationItem.Favorites.title -> {
+                    FavortiesViewBody(navController = navController)
+                }
+                BottomNavigationItem.Sport.title -> {
+                    SportViewBody(navController = navController)
                 }
                 else -> {
                     HomeViewBody(navController = navController)

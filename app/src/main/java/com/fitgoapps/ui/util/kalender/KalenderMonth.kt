@@ -18,12 +18,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.himanshoe.kalendar.common.KalendarKonfig
 import com.himanshoe.kalendar.common.KalendarSelector
+import com.himanshoe.kalendar.common.data.KalendarEvent
 import com.himanshoe.kalendar.util.getMonthNameFormatter
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.*
 
-private const val DAYS_IN_WEEK = 7
+const val DAYS_IN_WEEK = 7
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -31,6 +32,7 @@ fun KalenderMonth(
     kalenderKonfig: KalenderKonfig,
     selectedDay: LocalDate,
     kalendarSelector: KalendarSelector,
+    onCurrentDayClick: (LocalDate, KalenderEvent?) -> Unit,
 ) {
 
     val yearMonth =  YearMonth.now()
@@ -73,11 +75,13 @@ fun KalenderMonth(
             }
         )
 
+        KalenderWeekDayName(kalenderKonfig = kalenderKonfig)
+
         days.chunked(DAYS_IN_WEEK).forEach { weekDays ->
             BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
                 val size = (maxWidth / DAYS_IN_WEEK)
                 Row(horizontalArrangement = Arrangement.spacedBy(0.dp)) {
-                    weekDays.forEach { localDate ->
+                    weekDays.forEachIndexed { index, localDate ->
                         val isFromCurrentMonth = YearMonth.from(localDate) == monthState.value
 
                         if(isFromCurrentMonth){
@@ -86,20 +90,21 @@ fun KalenderMonth(
                                     localDate == clickedDay.value
 
                             KalenderDay(
+                                index =  index,
                                 size = size,
+                                isToday = localDate == LocalDate.now(),
                                 date = localDate,
                                 isSelected = isSelected,
-                                kalendarSelector = kalendarSelector
+                                kalendarSelector = kalendarSelector,
+                                onDayClick = { date, event ->
+                                    clickedDay.value = date
+                                    onCurrentDayClick(date, event)
+                                }
                             )
 
                         } else {
 
-                            KalenderDay(
-                                size = size,
-                                date = localDate,
-                                isSelected = false,
-                                kalendarSelector = kalendarSelector
-                            )
+                            KalenderEmptyDay(modifier = Modifier.size(size))
 
                         }
 
