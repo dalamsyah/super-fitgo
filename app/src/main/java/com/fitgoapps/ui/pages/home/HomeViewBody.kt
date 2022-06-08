@@ -87,7 +87,7 @@ fun HomeViewBody(navController: NavHostController = rememberNavController(), vie
                             )
 
                             Box(modifier = Modifier.padding(start = 2.dp),) {
-                                Column() {
+                                Row() {
                                     if (searchText.value.isEmpty()) {
                                         Text(
                                             stringResource(id = R.string.cari_lapangan),
@@ -96,7 +96,26 @@ fun HomeViewBody(navController: NavHostController = rememberNavController(), vie
                                         )
                                     }
                                 }
-                                innerTextField()
+
+                                Row(horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+
+                                    innerTextField()
+
+                                    if (searchText.value.isNotEmpty()) {
+                                        Text(
+                                            modifier = Modifier.padding(end = 2.dp).clickable {
+                                                  searchText.value = ""
+                                            },
+                                            text = stringResource(id = R.string.icon_fa_icon_xmark),
+                                            fontFamily = FA,
+                                            color = Color.Gray
+                                        )
+                                    }
+                                }
+
                             }
 
                         }
@@ -131,8 +150,8 @@ fun HomeViewBody(navController: NavHostController = rememberNavController(), vie
         ))
 
         if (searchResult.isEmpty()){
-            Box(modifier = Modifier.heightIn(0.dp, 150.dp), contentAlignment = Alignment.Center){
-                Text(text = stringResource(id = R.string.not_found), modifier = Modifier.fillMaxSize(), textAlign = TextAlign.Center)
+            Box(modifier = Modifier.heightIn(0.dp, 150.dp).fillMaxSize(), contentAlignment = Alignment.Center){
+                Text(text = stringResource(id = R.string.not_found), modifier = Modifier, textAlign = TextAlign.Center)
             }
         }
 
@@ -147,8 +166,8 @@ fun HomeViewBody(navController: NavHostController = rememberNavController(), vie
         ))
 
         if (searchResult.isEmpty()){
-            Box(modifier = Modifier.heightIn(0.dp, 150.dp), contentAlignment = Alignment.Center){
-                Text(text = stringResource(id = R.string.not_found), modifier = Modifier.fillMaxSize(), textAlign = TextAlign.Center)
+            Box(modifier = Modifier.heightIn(0.dp, 150.dp).fillMaxSize(), contentAlignment = Alignment.Center){
+                Text(text = stringResource(id = R.string.not_found), modifier = Modifier, textAlign = TextAlign.Center)
             }
         }
 

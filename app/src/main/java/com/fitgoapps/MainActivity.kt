@@ -79,7 +79,7 @@ fun FitgoNavHost(
 ){
     NavHost(
         navController = navController,
-        startDestination = FitgoScreen.IndexView.name,
+        startDestination = FitgoScreen.JamDetailView.name,
         modifier = modifier
     ){
 

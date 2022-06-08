@@ -14,6 +14,9 @@
     <string name="icon_fa_icon_route">&#xf4d7;</string>
     <string name="icon_fa_icon_circle_arrow_left">&#xf0a8;</string>
     <string name="icon_fa_icon_circle_arrow_right">&#xf0a9;</string>
+    <string name="icon_fa_icon_xmark">&#xf00d;</string>
+    <string name="icon_fa_icon_calendar">&#xf133;</string>
+    <string name="icon_fa_icon_circle_check">&#xf058;</string>
 
 
     <string name="app_name">Super Fitgo</string>
@@ -41,4 +44,6 @@
     <string name="notification">Notification</string>
     <string name="account">Account</string>
     <string name="not_found">Not Found</string>
+    <string name="choose_schedule">Choose schedule</string>
+    <string name="confirm_and_pay"><![CDATA[Confirm & Pay]]></string>
 </resources>
