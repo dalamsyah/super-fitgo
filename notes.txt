@@ -1,2 +1,2 @@
 token github
-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
+ghp_JTmLHr6vrY80BDiMaSPouQPkGKAHlSfe72X4Wligs
