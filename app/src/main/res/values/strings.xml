@@ -46,4 +46,8 @@
     <string name="not_found">Not Found</string>
     <string name="choose_schedule">Choose schedule</string>
     <string name="confirm_and_pay"><![CDATA[Confirm & Pay]]></string>
+    <string name="submit">Submit</string>
+    <string name="please_complete_booking_before">Please complete payment before</string>
+    <string name="information">Information</string>
+    <string name="choose_payment">Choose payment</string>
 </resources>

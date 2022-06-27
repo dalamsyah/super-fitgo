@@ -118,7 +118,7 @@ fun JamViewBody(navController: NavHostController = rememberNavController(), view
                     end = paddingLeftRight,
                     bottom = navigationBottomPaddingCustom
                 ), onClick = {
-                navController.navigate(FitgoScreen.IndexView.name)
+                navController.navigate(FitgoScreen.PaymentView.name)
             })
 
     }

@@ -15,6 +15,7 @@ enum class FitgoScreen {
     AccountView,
     FavoritesView,
     SportView,
+    PaymentView,
     ;
 
     companion object {
@@ -32,6 +33,7 @@ enum class FitgoScreen {
                 SportView.name -> SportView
                 LoginView.name -> LoginView
                 RegisterView.name -> RegisterView
+                PaymentView.name -> PaymentView
                 null -> IndexView
                 else -> throw IllegalArgumentException("Route $route is not recognized.")
             }

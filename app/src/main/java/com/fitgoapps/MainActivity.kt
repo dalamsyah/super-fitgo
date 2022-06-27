@@ -26,6 +26,7 @@ import com.fitgoapps.ui.pages.account.AccountViewBody
 import com.fitgoapps.ui.pages.booking.calendar.CalendarViewBody
 import com.fitgoapps.ui.pages.booking.detail.BookingDetailViewBody
 import com.fitgoapps.ui.pages.booking.jam.JamViewBody
+import com.fitgoapps.ui.pages.booking.payment.PaymentViewBody
 import com.fitgoapps.ui.pages.favorites.FavortiesViewBody
 import com.fitgoapps.ui.pages.index.IndexViewBody
 import com.fitgoapps.ui.pages.lapangan.detail.LapanganDetailViewBody
@@ -79,7 +80,7 @@ fun FitgoNavHost(
 ){
     NavHost(
         navController = navController,
-        startDestination = FitgoScreen.JamDetailView.name,
+        startDestination = FitgoScreen.LoginView.name,
         modifier = modifier
     ){
 
@@ -118,6 +119,9 @@ fun FitgoNavHost(
         }
         composable(route = FitgoScreen.SportView.name) {
             SportViewBody(navController = navController)
+        }
+        composable(route = FitgoScreen.PaymentView.name) {
+            PaymentViewBody(navController = navController)
         }
 
     }
