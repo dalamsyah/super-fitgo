@@ -9,8 +9,6 @@ class RetrofitInstance {
 
     companion object {
 
-        val baseUrl = "http://54.179.102.25/"
-
         fun getInstance() : Retrofit {
 
             val logging = HttpLoggingInterceptor()
@@ -20,7 +18,7 @@ class RetrofitInstance {
             client.addInterceptor(logging)
 
             return Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(Constants.BASE_URL)
                 .client(client.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

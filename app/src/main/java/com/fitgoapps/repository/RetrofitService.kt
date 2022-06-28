@@ -8,13 +8,19 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
+object Constants {
+
+    // Endpoints
+    const val BASE_URL = "http://54.179.102.25/"
+    const val LOGIN = "user/login"
+
+}
+
 interface RetrofitService {
 
     @Headers("Accept: application/json")
-    @POST("user/login")
+    @POST(Constants.LOGIN)
     fun login(@Body loginReq: LoginRequest): Call<LoginResponse>
 
-//    @GET
-//    fun getUserFavorites()
 
 }
