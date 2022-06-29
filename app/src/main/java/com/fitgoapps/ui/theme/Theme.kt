@@ -85,11 +85,12 @@ fun ButtonPrimary (
     text: String,
     onClick: () -> Unit = {},
     enabled : Boolean = true,
+    backgroundColor: Color = Green
 ){
 
     Button(
         shape = RoundedCornerShape(roundedCorner),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Green),
+        colors = ButtonDefaults.buttonColors(backgroundColor = backgroundColor),
         modifier = modifier.height(50.dp),
         onClick = onClick,
         enabled = enabled,

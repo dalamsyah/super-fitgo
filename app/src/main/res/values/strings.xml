@@ -17,6 +17,7 @@
     <string name="icon_fa_icon_xmark">&#xf00d;</string>
     <string name="icon_fa_icon_calendar">&#xf133;</string>
     <string name="icon_fa_icon_circle_check">&#xf058;</string>
+    <string name="icon_fa_icon_alarm_clock">&#xf34e;</string>
 
 
     <string name="app_name">Super Fitgo</string>
@@ -50,4 +51,9 @@
     <string name="please_complete_booking_before">Please complete payment before</string>
     <string name="information">Information</string>
     <string name="choose_payment">Choose payment</string>
+    <string name="payment">Payment</string>
+    <string name="voucher_and_promo"><![CDATA[Voucher & Promo]]></string>
+    <string name="masukan_kode_voucher">Masukan Kode Voucher</string>
+    <string name="claim">Claim</string>
+    <string name="details">Details</string>
 </resources>

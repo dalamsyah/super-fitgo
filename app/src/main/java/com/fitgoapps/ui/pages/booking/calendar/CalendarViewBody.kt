@@ -58,7 +58,7 @@ fun CalendarViewBody(navController: NavHostController, viewModel: CalendarViewMo
                 })
 
             ButtonPrimary(text = stringResource(id = R.string.next), modifier = Modifier.fillMaxWidth(), onClick = {
-//                navController.navigate(FitgoScreen.IndexView.name)
+                navController.navigate(FitgoScreen.PaymentView.name)
             })
 
         }
