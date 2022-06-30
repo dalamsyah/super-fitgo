@@ -9,11 +9,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -29,6 +32,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,17 +43,26 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fitgoapps.R
+import com.fitgoapps.repository.response.LoginResponse
 import com.fitgoapps.ui.pages.FitgoScreen
+import com.fitgoapps.ui.pages.ShareViewModel
 import com.fitgoapps.ui.theme.*
+import com.fitgoapps.ui.util.FA_Regular
 import com.fitgoapps.ui.util.MyAlert
+import com.fitgoapps.utils.SessionManager
 import kotlinx.coroutines.Delay
 import kotlinx.coroutines.delay
 import retrofit2.Response
 
 @Composable
-fun LoginViewBody(navController: NavHostController, viewModel: LoginViewModel = viewModel() ){
+fun LoginViewBody(navController: NavHostController, viewModel: LoginViewModel = viewModel(), shareViewModel: ShareViewModel){
 
     val context = LocalContext.current
+    val session = SessionManager(context)
+
+    var passwordVisibility = remember {
+        mutableStateOf(false)
+    }
 
     if (viewModel.indicator.value){
         MyAlert(context).indicator()
@@ -64,8 +79,24 @@ fun LoginViewBody(navController: NavHostController, viewModel: LoginViewModel = 
             .show()
     }
 
-    if (viewModel.loginObserver.value is Boolean) {
-        navController.navigate(FitgoScreen.IndexView.name)
+    if (viewModel.loginObserver.value is Response<*>) {
+
+        val loginRes : Response<LoginResponse> = viewModel.loginObserver.value as  Response<LoginResponse>
+
+        if (loginRes.isSuccessful){
+            if (loginRes.body()?.token ?: "" != ""){
+
+                shareViewModel.isLogged.value = true
+                session.saveUser(loginRes.body()!!.data)
+                session.saveAuthToken(loginRes.body()!!.token)
+
+                navController.navigate(FitgoScreen.IndexView.name){
+                    popUpTo(FitgoScreen.LoginView.name) { inclusive = true }
+                }
+            }
+        }
+
+
     }
 
     Column(modifier = Modifier.padding(start = paddingStart, end = paddingEnd)) {
@@ -76,15 +107,36 @@ fun LoginViewBody(navController: NavHostController, viewModel: LoginViewModel = 
             viewModel.email.value = it
         })
 
-        EditTextPrimary(label = stringResource(id = R.string.password), value = viewModel.password.value, onValueChange = {
+        EditTextPrimary(
+            label = stringResource(id = R.string.password),
+            value = viewModel.password.value,
+            visualTransformation = if (passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            onValueChange = {
             viewModel.password.value = it
-        })
+            },
+            trailingIcon = {
+
+                val image = if (passwordVisibility.value)
+                    stringResource(id = R.string.icon_fa_icon_eye)
+                else stringResource(id = R.string.icon_fa_icon_eye_slash)
+
+                IconButton(onClick = {
+                    passwordVisibility.value = !passwordVisibility.value
+                }) {
+                    Text(
+                        text = image,
+                        fontFamily = FA_Regular,
+                        color = Color.Gray
+                    )
+                }
+            }
+        )
 
         Spacer(modifier = Modifier.height(10.dp))
 
         ButtonPrimary(text = stringResource(id = R.string.login), modifier = Modifier.fillMaxWidth(), onClick = {
-//            viewModel.login()
-            navController.navigate(FitgoScreen.IndexView.name)
+            viewModel.login()
         })
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -107,13 +159,4 @@ fun LoginViewBody(navController: NavHostController, viewModel: LoginViewModel = 
 
     }
 
-}
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    val navController = rememberNavController()
-    LoginViewBody(navController)
 }

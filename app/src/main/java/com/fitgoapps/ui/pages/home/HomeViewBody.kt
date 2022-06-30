@@ -33,12 +33,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.fitgoapps.R
 import com.fitgoapps.ui.pages.FitgoScreen
+import com.fitgoapps.ui.pages.ShareViewModel
 import com.fitgoapps.ui.theme.*
 import com.fitgoapps.ui.util.FA
 import java.util.*
 
 @Composable
-fun HomeViewBody(navController: NavHostController = rememberNavController(), viewModel : HomeViewModel = viewModel()){
+fun HomeViewBody(navController: NavHostController = rememberNavController(), viewModel : HomeViewModel = viewModel(), shareViewModel: ShareViewModel){
+
 
     val items = listOf(
         "Walang Futsal",

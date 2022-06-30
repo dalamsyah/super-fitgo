@@ -37,8 +37,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.fitgoapps.R
 import com.fitgoapps.ui.pages.FitgoScreen
+import com.fitgoapps.ui.pages.ShareViewModel
 import com.fitgoapps.ui.pages.TemplateNavigation
 import com.fitgoapps.ui.pages.booking.detail.BookingDetailViewBody
+import com.fitgoapps.ui.pages.booking.list_booking.ListBookingViewBody
 import com.fitgoapps.ui.pages.favorites.FavortiesViewBody
 import com.fitgoapps.ui.pages.home.HomeViewBody
 import com.fitgoapps.ui.pages.login.LoginViewModel
@@ -57,7 +59,17 @@ sealed class BottomNavigationItem(var icon : Int, var title: Int, var layout: @C
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
 @Composable
-fun IndexViewBody(navController: NavHostController, viewModel: LoginViewModel = viewModel()){
+fun IndexViewBody(navController: NavHostController, viewModel: LoginViewModel = viewModel(), shareViewModel: ShareViewModel){
+
+    /**
+     * check logged
+     */
+    if (!shareViewModel.isLogged()){
+        navController.navigate(FitgoScreen.LoginView.name){
+            popUpTo(FitgoScreen.IndexView.name) { inclusive = true }
+        }
+        return
+    }
 
     val currentPage = remember { mutableStateOf(0) }
 
@@ -74,10 +86,10 @@ fun IndexViewBody(navController: NavHostController, viewModel: LoginViewModel = 
              */
             when(tabs[currentPage.value].title){
                 BottomNavigationItem.Home.title -> {
-                    HomeViewBody(navController = navController)
+                    HomeViewBody(navController = navController, shareViewModel = shareViewModel)
                 }
                 BottomNavigationItem.Booking.title -> {
-                    BookingDetailViewBody(navController = navController)
+                    ListBookingViewBody(navController = navController)
                 }
                 BottomNavigationItem.Favorites.title -> {
                     FavortiesViewBody(navController = navController)
@@ -86,7 +98,7 @@ fun IndexViewBody(navController: NavHostController, viewModel: LoginViewModel = 
                     SportViewBody(navController = navController)
                 }
                 else -> {
-                    HomeViewBody(navController = navController)
+                    HomeViewBody(navController = navController, shareViewModel = shareViewModel)
                 }
             }
 

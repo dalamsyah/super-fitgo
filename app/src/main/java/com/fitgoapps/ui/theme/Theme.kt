@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -107,7 +108,9 @@ fun EditTextPrimary(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     trailingIcon: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
 
@@ -128,7 +131,7 @@ fun EditTextPrimary(
             textColor = Color.Black,
         ),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = keyboardType),
+        keyboardOptions = keyboardOptions,
         value = value,
         onValueChange = onValueChange,
         label = {
@@ -143,7 +146,8 @@ fun EditTextPrimary(
 //                )
 //            )
 //        },
-        trailingIcon = trailingIcon
+        trailingIcon = trailingIcon,
+        leadingIcon = leadingIcon
     )
 
 }

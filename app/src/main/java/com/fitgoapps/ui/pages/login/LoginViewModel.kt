@@ -36,7 +36,7 @@ class LoginViewModel  : ViewModel() {
                 indicator.value = false
 
                 if (response.isSuccessful){
-                    loginObserver.value = response.isSuccessful
+                    loginObserver.value = response
                 } else {
                     loginObserver.value = response.body()?.message ?: "Failed login"
                 }

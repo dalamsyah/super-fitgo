@@ -18,6 +18,8 @@
     <string name="icon_fa_icon_calendar">&#xf133;</string>
     <string name="icon_fa_icon_circle_check">&#xf058;</string>
     <string name="icon_fa_icon_alarm_clock">&#xf34e;</string>
+    <string name="icon_fa_icon_eye">&#xf06e;</string>
+    <string name="icon_fa_icon_eye_slash">&#xf070;</string>
 
 
     <string name="app_name">Super Fitgo</string>
@@ -56,4 +58,5 @@
     <string name="masukan_kode_voucher">Masukan Kode Voucher</string>
     <string name="claim">Claim</string>
     <string name="details">Details</string>
+    <string name="logout">Logout</string>
 </resources>
