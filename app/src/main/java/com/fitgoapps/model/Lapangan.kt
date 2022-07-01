@@ -18,6 +18,6 @@ data class Lapangan(
     var updatedAt: String?,
     var user_id: Int?,
     var sport_type_id: Int?,
-    var TypeLapangans: TypeLapangan?,
-    var lapanganImages: LapanganImage?
+    var TypeLapangans: MutableList<TypeLapangan>?,
+    var lapanganImages: MutableList<LapanganImage>?
 )

@@ -116,8 +116,8 @@ fun PaymentViewBody( navController: NavHostController, viewModel: PaymentViewMod
                     repeat(paymentTypes.size) {
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(text = paymentTypes[it].payment_name)
-                                Text(text = paymentTypes[it].desc, )
+                                Text(text = paymentTypes[it].payment_name!!)
+                                Text(text = paymentTypes[it].desc!!, )
                             }
                             RadioButton(selected = false, onClick = {})
                         }

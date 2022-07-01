@@ -47,7 +47,7 @@ class LoginViewModel  : ViewModel() {
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
 
                 indicator.value = false
-                loginObserver.value = t.localizedMessage
+                loginObserver.value = "Failure"
 
                 Log.d(TAG, "onFailure: "+t.localizedMessage)
             }
