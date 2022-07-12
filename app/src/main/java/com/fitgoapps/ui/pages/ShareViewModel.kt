@@ -10,6 +10,7 @@ import com.fitgoapps.utils.SessionManager
 
 class ShareViewModel(application: Application) : ViewModel() {
 
+    var tokenParam: String = ""
     private val session = SessionManager(application)
 
     val isLogged : MutableState<Boolean> = mutableStateOf(false)
@@ -23,7 +24,7 @@ class ShareViewModel(application: Application) : ViewModel() {
         return session.fetchAuthToken() != null
     }
 
-    val token = session.fetchAuthToken()!!
+    val token = session.fetchAuthToken()
 
 }
 

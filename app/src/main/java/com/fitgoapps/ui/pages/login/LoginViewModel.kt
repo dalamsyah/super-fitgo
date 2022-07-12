@@ -8,6 +8,8 @@ import com.fitgoapps.repository.RetrofitInstance
 import com.fitgoapps.repository.RetrofitService
 import com.fitgoapps.repository.request.LoginRequest
 import com.fitgoapps.repository.response.LoginResponse
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +30,7 @@ class LoginViewModel  : ViewModel() {
         indicator.value = true
 
         val retrofit = RetrofitInstance.getInstance().create(RetrofitService::class.java)
-        val call = retrofit.login(LoginRequest(email = email.value, password = password.value))
+        val call = retrofit.login(LoginRequest(email = "iwan@gmail.com", password = "keb@ntenan2018"))
 
         call.enqueue(object : Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
@@ -38,7 +40,12 @@ class LoginViewModel  : ViewModel() {
                 if (response.isSuccessful){
                     loginObserver.value = response
                 } else {
-                    loginObserver.value = response.body()?.message ?: "Failed login"
+
+                    val gson = Gson()
+                    val type = object : TypeToken<LoginResponse>() {}.type
+                    var errorResponse: LoginResponse? = gson.fromJson(response.errorBody()!!.charStream(), type)
+
+                    loginObserver.value = errorResponse?.message ?: "Failed login"
                 }
 
                 Log.d(TAG, "onResponse: "+response.body())

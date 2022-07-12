@@ -1,6 +1,7 @@
 package com.fitgoapps.ui.pages.home
 
 import android.util.Log
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,13 +14,12 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +45,7 @@ import com.fitgoapps.ui.pages.ShareViewModel
 import com.fitgoapps.ui.theme.*
 import com.fitgoapps.ui.util.FA
 import com.fitgoapps.ui.util.MyAlert
+import kotlinx.coroutines.delay
 import java.util.*
 
 @Composable
@@ -58,7 +59,8 @@ fun HomeViewBody(navController: NavHostController = rememberNavController(), vie
     }
 
     LaunchedEffect(Unit){
-        viewModel.fetchLapangan(shareViewModel.token)
+        delay(500)
+        viewModel.fetchLapangan(shareViewModel.token ?: shareViewModel.tokenParam)
     }
 
     if (viewModel.result.value is LapanganResponse){
@@ -70,9 +72,9 @@ fun HomeViewBody(navController: NavHostController = rememberNavController(), vie
         }
     }
 
-    if (viewModel.indicator.value){
-        MyAlert(context).indicator()
-    }
+//    if (viewModel.indicator.value){
+//        MyAlert(context).indicator()
+//    }
 
     if (viewModel.result.value is String && viewModel.result.value != ""){
 
@@ -182,37 +184,45 @@ fun HomeViewBody(navController: NavHostController = rememberNavController(), vie
             paddingLeftRight
         ))
 
-        if (searchResult.isEmpty()){
-            Box(modifier = Modifier
-                .heightIn(0.dp, 150.dp)
-                .fillMaxSize(), contentAlignment = Alignment.Center){
-                Text(text = stringResource(id = R.string.not_found), modifier = Modifier, textAlign = TextAlign.Center)
+        if (searchResult.isEmpty() || viewModel.indicator.value ){
+            LazyRow(modifier = Modifier){
+                repeat(5) {
+                    item {
+                        ShimmerAnimation()
+                    }
+                }
+            }
+        } else {
+            LazyRow(modifier = Modifier){
+                itemsIndexed(searchResult){ index, item ->
+                    CardLapangan(item, navController)
+                }
             }
         }
 
-        LazyRow(modifier = Modifier){
-            itemsIndexed(searchResult){ index, item ->
-                CardLapangan(item, navController)
-            }
-        }
+
 
         Text(text = stringResource(id = R.string.nearbymerchant), modifier = Modifier.padding(
             paddingLeftRight
         ))
 
-        if (searchResult.isEmpty()){
-            Box(modifier = Modifier
-                .heightIn(0.dp, 150.dp)
-                .fillMaxSize(), contentAlignment = Alignment.Center){
-                Text(text = stringResource(id = R.string.not_found), modifier = Modifier, textAlign = TextAlign.Center)
+        if (searchResult.isEmpty() || viewModel.indicator.value ){
+            LazyColumn(modifier = Modifier){
+                repeat(5) {
+                    item {
+                        ShimmerAnimation()
+                    }
+                }
+            }
+        } else {
+            LazyColumn(modifier = Modifier){
+                itemsIndexed(searchResult){ index, item ->
+                    CardLapangan(item, index == (items.size - 1), navController)
+                }
             }
         }
 
-        LazyColumn(modifier = Modifier){
-            itemsIndexed(searchResult){ index, item ->
-                CardLapangan(item, index == (items.size - 1), navController)
-            }
-        }
+
     }
 
 }
@@ -312,7 +322,8 @@ fun CardLapangan(lapangan: Lapangan, last: Boolean, navController: NavHostContro
                 placeholder = painterResource(R.drawable.dummy1),
                 contentDescription =lapangan.name ?: "null",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.heightIn(0.dp, 150.dp)
+                modifier = Modifier
+                    .heightIn(0.dp, 150.dp)
                     .fillMaxWidth()
             )
 
@@ -354,5 +365,71 @@ fun CardLapangan(lapangan: Lapangan, last: Boolean, navController: NavHostContro
         Spacer(modifier = Modifier.height(110.dp))
     } else {
         Spacer(modifier = Modifier.height(0.dp))
+    }
+}
+
+@Composable
+fun ShimmerAnimation(
+) {
+
+    /*
+    Create InfiniteTransition
+    which holds child animation like [Transition]
+    animations start running as soon as they enter
+    the composition and do not stop unless they are removed
+    */
+    val transition = rememberInfiniteTransition()
+    val translateAnim by transition.animateFloat(
+        /*
+        Specify animation positions,
+        initial Values 0F means it starts from 0 position
+        */
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
+
+            /*
+             Tween Animates between values over specified [durationMillis]
+            */
+            tween(durationMillis = 1200, easing = FastOutSlowInEasing),
+            RepeatMode.Reverse
+        )
+    )
+
+    /*
+      Create a gradient using the list of colors
+      Use Linear Gradient for animating in any direction according to requirement
+      start=specifies the position to start with in cartesian like system Offset(10f,10f) means x(10,0) , y(0,10)
+      end= Animate the end position to give the shimmer effect using the transition created above
+    */
+    val brush = Brush.linearGradient(
+        colors = ShimmerColorShades,
+        start = Offset(10f, 10f),
+        end = Offset(translateAnim, translateAnim)
+    )
+
+    ShimmerItem(brush = brush)
+
+}
+
+@Composable
+fun ShimmerItem(
+    brush: Brush
+) {
+
+    /*
+      Column composable shaped like a rectangle,
+      set the [background]'s [brush] with the
+      brush receiving from [ShimmerAnimation]
+      which will get animated.
+      Add few more Composable to test
+    */
+    Column(modifier = Modifier.padding(16.dp)) {
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .size(200.dp)
+                .background(brush = brush)
+        )
     }
 }

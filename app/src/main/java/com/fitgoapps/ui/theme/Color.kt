@@ -17,3 +17,13 @@ val YellowStar = Color(0xFFF47E10)
 val RedPayment = Color(0xFFF27171)
 val BackgroundColorLayout = Color(0xFFE5E5E5)
 val OrenClaim = Color(0xFFF49C4A)
+
+val ShimmerColorShades = listOf(
+
+    Color.LightGray.copy(0.9f),
+
+    Color.LightGray.copy(0.2f),
+
+    Color.LightGray.copy(0.9f)
+
+)

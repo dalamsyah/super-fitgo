@@ -87,6 +87,7 @@ fun LoginViewBody(navController: NavHostController, viewModel: LoginViewModel = 
             if (loginRes.body()?.token ?: "" != ""){
 
                 shareViewModel.isLogged.value = true
+                shareViewModel.tokenParam = loginRes.body()!!.token
                 session.saveUser(loginRes.body()!!.data)
                 session.saveAuthToken(loginRes.body()!!.token)
 
